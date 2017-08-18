@@ -4,7 +4,8 @@ import  {View,Alert,Animated, Text,StyleSheet, Image,ScrollView,TouchableOpacity
 class FoodSortTypesView extends  Component {
     static  propTypes = {
         sortTypes:PropTypes.array.isRequired,
-        clickSortTypes:PropTypes.func.isRequired
+        clickSortTypes:PropTypes.func.isRequired,
+        customStyle:View.propTypes.style
     }
     // 构造
     constructor(props) {
@@ -29,12 +30,15 @@ class FoodSortTypesView extends  Component {
             inputRange:[0,1],
             outputRange:[ - sortTypes.length * 30 , 0]
         })
-
+        const backgroundColorAni =  this.state.sortTypeTopAni.interpolate({
+            inputRange:[0,1],
+            outputRange:['transparent', 'rgba(1,1,1,0.3)']
+        })
         return (
             <TouchableOpacity  activeOpacity={1}
                                onPress={this._close.bind(this)}
-                               style={styles.touchContainer}>
-                <View style={[styles.header,{zIndex:2}]}>
+                               style={[styles.touchContainer,this.props.customStyle]}>
+                <View style={[styles.header,{zIndex:1}]}>
                    <TouchableOpacity style={{flexDirection:'row'}}
                                      onPress={this._popSortTypes.bind(this)}>
                        <Text style={{fontSize:13}}>常见</Text>
@@ -45,7 +49,7 @@ class FoodSortTypesView extends  Component {
                    </TouchableOpacity>
                 </View>
                 {/*sorttypes*/}
-                {isShow && <Animated.View style={[styles.sortTypes,{top:sortTypeTopAni,zIndex:1}]}>
+                {isShow && <Animated.View style={[styles.sortTypes,{top:sortTypeTopAni}]}>
                     {cells}
                 </Animated.View>}
             </TouchableOpacity>
@@ -101,18 +105,20 @@ const TypeCell = ({data, onPressCell })=> {
 
 const  styles = StyleSheet.create({
     touchContainer:{
+        width:gScreen.width,
     },
     header:{
         flexDirection:'row',
         paddingHorizontal:10,
         alignItems:'center',
         height:40,
-        backgroundColor:'white'
+        backgroundColor:'white',
     },
     sortTypes:{
         flexDirection:'row',
         flexWrap:'wrap',
         backgroundColor:'white'
+        ,height:gScreen.height - gScreen.navBarHeight - 40
     },
     cell:{
         width:gScreen.width/3,
@@ -120,7 +126,8 @@ const  styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
         borderBottomWidth:gScreen.onePix,
-        borderBottomColor:gColors.border
+        borderBottomColor:gColors.border,
+        backgroundColor:'white'
     }
 })
 

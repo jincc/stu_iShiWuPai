@@ -23,6 +23,10 @@ import get from '../../common/HttpTools'
         this.sub_value =  categoryId;
         return this._fetchFromUrl()
     }
+    _loadSortDatas(typeIndex){
+        this.orderBy = typeIndex
+        return this._fetchFromUrl()
+    }
     _fetchFromUrl(){
         const paras = {
             kind:this.kind,

@@ -111,11 +111,20 @@ import get from '../../common/HttpTools'
     }
     _clickSortTypes(data){
         //{ data: { code: 'manganese', name: '锰', index: '22' } }
+        this.foodStore._loadSortDatas(data.index).then((response)=>{
+            const {foods, isNoMore}  =  response
+            this.setState({
+                foods:[...foods],
+                isNoMore:isNoMore
+            })
+        })
     }
     componentWillMount(){
         this._fetchDatas()
         this._loadSortTypes()
     }
+    //,position: 'absolute',
+   // top:40 + gScreen.navBarHeight,left:0,width:gScreen.width,height:gScreen.height - 40 - gScreen.navBarHeight
     render(){
         const  {foods,sortTypes} =  this.state
         const {category: {id, name, sub_categories}} = this.props
@@ -134,16 +143,18 @@ import get from '../../common/HttpTools'
                     renderRightItem={this._renderRightItem.bind(this)}
                     onRight={this._onRight.bind(this)}
                 />
-                {sortTypes.length>0 && <FoodSortTypesView sortTypes={sortTypes}
+                {sortTypes.length>0 && <FoodSortTypesView customStyle={{zIndex:1}}
+                                                          sortTypes={sortTypes}
                                                           clickSortTypes={this._clickSortTypes.bind(this)}/> }
+
                 <ListView  style={{backgroundColor: 'rgba(220, 220, 220, 0.2)'}}
                            dataSource={ds}
                            renderRow={this._renderRow.bind(this)}
                            enableEmptySections
                            renderSeparator={this._renderSeparator.bind(this)}
                            onEndReached={this._loadMore.bind(this)}
-                           renderFooter={this._renderFooter.bind(this)}>
-                </ListView>
+                           renderFooter={this._renderFooter.bind(this)}/>
+
                 {categories.length>0 && <PopMenus ref={(pop)=>this.popMenus = pop}
                                                       categories={categories}
                                                       selectCatefory={this._selectCatefory.bind(this)}/>}
