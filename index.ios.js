@@ -17,3 +17,6 @@ global.__ANDROID__ = false
 //初始化配置
 require('./app/common/GlobalContants')
 require('./app/App')
+
+// require('./app/TestApp')
+// require('./app/TabNavigatorApp')

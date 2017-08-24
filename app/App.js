@@ -5,6 +5,7 @@ import NetInfoDecorator from  './common/NetInfoDecorator'
 import  store from './store/store'
 import  {Provider} from  'mobx-react'
 import AppPage from  './AppPage'
+import { StackNavigator } from 'react-navigation'
 
 /*
 

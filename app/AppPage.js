@@ -3,6 +3,7 @@ import {View, StatusBar} from  'react-native'
 import  {Navigator} from  'react-native-deprecated-custom-components'
 import {inject,observer} from 'mobx-react'
 import Router from './common/Routers'
+import {StackNavigator} from 'react-navigation'
 
 @inject('app')
 @observer
